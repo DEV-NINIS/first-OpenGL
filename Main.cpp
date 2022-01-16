@@ -10,6 +10,9 @@
 #include "AddBuffer.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <sstream>
 #include <filesystem>
@@ -25,6 +28,13 @@ void process_input(GLFWwindow* window) {
         glfwSetWindowShouldClose(window, true);
     }
 }int main() {
+        // entrainement
+    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+    glm::mat4 trans;
+    trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+    vec = trans * vec;
+    std::cout << vec.x << vec.y << vec.z << std::endl;
+        //
     std::string a;
     std::cout << " polygon mode 1: ou normal mode 2:" << std::endl;
     std::cin >> a;
@@ -169,6 +179,7 @@ void process_input(GLFWwindow* window) {
         //
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
+        pos += 0.00030;
         process_input(window);
         glClearColor(0.9f, 0.33f, 0.25f, 0.1f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -178,12 +189,6 @@ void process_input(GLFWwindow* window) {
         glBindTexture(GL_TEXTURE_2D, texture2);
         compile.Use_second_program_shader();
         glBindVertexArray(VAO[0]);
-        if (pos > 1){
-            pos -= 0.001;
-        }
-        else if (pos < -1) {
-            pos += 0.001;
-        }
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         if (a == "1") { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
