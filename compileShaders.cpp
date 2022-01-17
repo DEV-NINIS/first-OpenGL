@@ -28,15 +28,17 @@ source = "#version 460 core\n"
 "layout (location = 2) in vec2 aTexCoord;\n"
 
 "uniform float position;\n"
+"uniform mat4 transform;\n"
 "out vec3 ourColor;\n" // nous definirons la couleur dans cette variable 
 "out vec2 TexCoord;\n"
 
 "void main()\n"
 "{\n"
-    "   gl_Position = vec4(aPos.x + position, aPos.y, aPos.z, 1.0);\n"
+    "   gl_Position = transform * vec4(aPos, 1.0f);\n"
     "   ourColor = aColor;\n"
     "   TexCoord = vec2(aTexCoord.x, aTexCoord.y);\n"
     "}\n\0";
+
 fragment_shader = "#version 460 core\n"
 
 "out vec4 FragColor;\n"

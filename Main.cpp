@@ -28,13 +28,6 @@ void process_input(GLFWwindow* window) {
         glfwSetWindowShouldClose(window, true);
     }
 }int main() {
-        // entrainement
-    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
-    glm::mat4 trans;
-    trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
-    vec = trans * vec;
-    std::cout << vec.x << vec.y << vec.z << std::endl;
-        //
     std::string a;
     std::cout << " polygon mode 1: ou normal mode 2:" << std::endl;
     std::cin >> a;
@@ -177,6 +170,7 @@ void process_input(GLFWwindow* window) {
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture1"), 0);
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture2"), 1);
         //
+    
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
         pos += 0.00030;
@@ -187,7 +181,13 @@ void process_input(GLFWwindow* window) {
         glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
+        glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
         compile.Use_second_program_shader();
+        unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO[0]);
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
