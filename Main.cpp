@@ -1,9 +1,4 @@
 #include <iostream>
-#include <sstream>
-#include <fstream>
-#include <cerrno>
-#include <conio.h>
-#include <vector>
 #include <string>
 #include "refresh_color.h"
 #include "compileShaders.h"
@@ -13,9 +8,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <fstream>
-#include <sstream>
-#include <filesystem>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #define KEY_A 97
@@ -170,20 +162,19 @@ void process_input(GLFWwindow* window) {
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture1"), 0);
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture2"), 1);
         //
-    
+    glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
         pos += 0.00030;
         process_input(window);
-        glClearColor(0.9f, 0.33f, 0.25f, 0.1f);
+        glClearColor(0.9f, 0.33f, 0.25f, 0.9f);
         glClear(GL_COLOR_BUFFER_BIT);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
-        glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 0.0f));
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.5f, -1.0f));
 
         compile.Use_second_program_shader();
         unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
