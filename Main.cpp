@@ -165,6 +165,8 @@ void process_input(GLFWwindow* window) {
     glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
+        glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+
         pos += 0.00030;
         process_input(window);
         glClearColor(0.9f, 0.33f, 0.25f, 0.9f);
@@ -174,7 +176,7 @@ void process_input(GLFWwindow* window) {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
         transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.5f, -1.0f));
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
 
         compile.Use_second_program_shader();
         unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
