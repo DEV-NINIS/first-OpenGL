@@ -163,10 +163,19 @@ void process_input(GLFWwindow* window) {
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture2"), 1);
         //
     glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
+    bool abc= true;
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
         glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-
+        if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
+            transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 1.0f));
+            transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.5f, 0.0f, 0.7f));
+        }
+        else {
+            transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 0.0f));
+            transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
+        }
         pos += 0.00030;
         process_input(window);
         glClearColor(0.9f, 0.33f, 0.25f, 0.9f);
@@ -175,11 +184,7 @@ void process_input(GLFWwindow* window) {
         glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
-        transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
-
         compile.Use_second_program_shader();
-        unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO[0]);
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
