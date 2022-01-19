@@ -29,12 +29,15 @@ source = "#version 460 core\n"
 
 "uniform float position;\n"
 "uniform mat4 transform;\n"
+"uniform mat4 view;\n"
+"uniform mat4 projection;\n"
+"uniform mat4 model;\n"
 "out vec3 ourColor;\n" // nous definirons la couleur dans cette variable 
 "out vec2 TexCoord;\n"
 
 "void main()\n"
 "{\n"
-    "   gl_Position = transform * vec4(aPos, 1.0f);\n"
+    "   gl_Position = projection * view * model * transform * vec4(aPos, 1.0f);\n"
     "   ourColor = aColor;\n"
     "   TexCoord = vec2(aTexCoord.x, aTexCoord.y);\n"
     "}\n\0";

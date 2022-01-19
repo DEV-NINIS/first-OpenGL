@@ -33,6 +33,8 @@ void process_input(GLFWwindow* window) {
 #endif
     int resX2 = 2560;
     int resY2 = 1440;
+    float resFx = 2560;
+    float resFy = 1440;
     GLFWwindow* window = glfwCreateWindow(resX2, resY2, "opengl_anis", NULL, NULL);
     if (window == NULL)
     {
@@ -47,12 +49,50 @@ void process_input(GLFWwindow* window) {
     }
     glViewport(0, 0, resX2, resY2);
     float vertecies[] = {
+
          // position         // color
         // positions         // colors
-     0.5f,  0.5f, 0.0f,   0.9f, 0.6f, 0.2f,   1.0f, 1.0f,   // top right
-     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.8f,   1.0f, 0.0f,   // bottom right
-    -0.5f, -0.5f, 0.0f,   0.8f, 0.3f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -0.5f,  0.5f, 0.0f,   0.4f, 1.0f, 0.2f,   0.0f, 1.0f    // top left 
+     -0.5f, -0.5f, -0.5f,   0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  0.9f, 0.6f, 0.2f, 1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  0.5f, 0.6f, 0.9f,1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  0.7f, 0.6f, 0.8f,1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.1f, 0.6f, 0.9f,0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.3f, 0.6f, 0.1f,0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.2f, 0.1f, 0.9f,0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  0.9f, 0.6f, 0.9f,1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  0.2f, 0.2f, 0.9f,1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  0.3f, 0.6f, 0.1f,1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  0.9f, 0.1f, 0.2f,1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.2f, 0.6f, 0.9f,1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.2f, 0.5f, 0.9f,0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.2f, 0.6f, 0.9f,0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.2f, 0.6f, 0.9f,1.0f, 0.0f,
+
+         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f
     };
     float vertecies2[] = {
         0.0f, -0.5f, 0.0f,  // left
@@ -163,9 +203,19 @@ void process_input(GLFWwindow* window) {
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture2"), 1);
         //
     glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+    glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
     unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 projection = glm::mat4(1.0f);
+    int modelLoc = glGetUniformLocation(compile.get_shader(), "model");
+    int projectionLoc = glGetUniformLocation(compile.get_shader(), "projection");
+    int viewLoc = glGetUniformLocation(compile.get_shader(), "view");
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 projection = glm::mat4(1.0f);
         glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
             transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 1.0f));
@@ -178,7 +228,7 @@ void process_input(GLFWwindow* window) {
         pos += 0.00030;
         process_input(window);
         glClearColor(0.9f, 0.33f, 0.25f, 0.9f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
@@ -187,15 +237,24 @@ void process_input(GLFWwindow* window) {
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO[0]);
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
-        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+        
+        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(1.0f, 0.0f, -3.0f));
+        projection = glm::perspective(glm::radians(45.0f), (float)resFx / (float)resFy, 0.1f, 100.0f);
+        
         transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
-        float scaleAmount = sin(glfwGetTime());
+        transform = glm::translate(transform, glm::vec3(-0.0f, 0.0f, 0.0f));
+        float scaleAmount = static_cast<float>(sin(glfwGetTime()));
         transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0, 1.0f));
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform)); // this time take the matrix value array's first element as its memory pointer value
 
         // now with the uniform matrix being replaced with new transformations, draw it again.
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glEnable(GL_DEPTH_TEST);
 
         if (a == "1") { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
         framebuffer_size_callback(window, resX2, resY2);
