@@ -164,7 +164,6 @@ void process_input(GLFWwindow* window) {
         //
     glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
-    bool abc= true;
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
         glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
@@ -188,7 +187,16 @@ void process_input(GLFWwindow* window) {
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO[0]);
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
+        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+        transform = glm::mat4(1.0f);
+        transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
+        float scaleAmount = sin(glfwGetTime());
+        transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform)); // this time take the matrix value array's first element as its memory pointer value
+
+        // now with the uniform matrix being replaced with new transformations, draw it again.
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
         if (a == "1") { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
         framebuffer_size_callback(window, resX2, resY2);
         glfwSwapBuffers(window);
