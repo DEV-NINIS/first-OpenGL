@@ -240,7 +240,7 @@ void process_input(GLFWwindow* window) {
         
         pos += 0.00030;
         process_input(window);
-        glClearColor(0.9f, 0.33f, 0.25f, 0.9f);
+        glClearColor(0.9f, 0.93f, 0.25f, 0.1f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -269,6 +269,7 @@ void process_input(GLFWwindow* window) {
         // now with the uniform matrix being replaced with new transformations, draw it again.
         glDrawArrays(GL_TRIANGLES, 0, 36);
         ImGui::Begin("Dev_ninis");
+        ImGui::Button("R"); ImGui::Button("G"); ImGui::Button("B");
         ImGui::Text("Anis");
         ImGui::End();
         ImGui::Render();
