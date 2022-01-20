@@ -3,6 +3,9 @@
 #include "refresh_color.h"
 #include "compileShaders.h"
 #include "AddBuffer.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -48,6 +51,14 @@ void process_input(GLFWwindow* window) {
          return-1;
     }
     glViewport(0, 0, resX2, resY2);
+    // imgui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 460 core");
+    //
     float vertecies[] = {
 
          // position         // color
@@ -63,36 +74,36 @@ void process_input(GLFWwindow* window) {
          0.5f, -0.5f,  0.5f,  0.9f, 0.6f, 0.9f,1.0f, 0.0f,
          0.5f,  0.5f,  0.5f,  0.2f, 0.2f, 0.9f,1.0f, 1.0f,
          0.5f,  0.5f,  0.5f,  0.3f, 0.6f, 0.1f,1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.2f, 0.3f, 0.9f,0.0f, 1.0f,
         -0.5f, -0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 0.0f,
 
         -0.5f,  0.5f,  0.5f,  0.9f, 0.1f, 0.2f,1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.2f, 0.6f, 0.9f,1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.2f, 0.5f, 0.9f,0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.2f, 0.6f, 0.9f,0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.2f, 0.6f, 0.9f,1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.4f, 0.6f, 0.8f,1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.5f, 0.4f,0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.1f, 0.2f, 0.8f,0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.6f, 0.6f, 0.9f,0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.3f,1.0f, 0.0f,
 
-         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.3f, 0.9f, 0.9f, 1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f, 0.9f, 0.4f, 0.3f, 1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 0.1f, 0.6f, 0.9f, 0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 0.7f, 0.1f, 0.5f, 0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 0.2f, 0.4f, 0.1f, 0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.7f, 0.9f, 0.0f, 1.0f, 0.0f,
 
-        -0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.7f, 0.6f, 0.8f, 0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f, 0.5f, 0.4f, 0.1f, 1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 0.6f, 0.6f, 0.5f, 1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f, 0.9f, 0.3f, 0.2f, 1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f, 0.1f, 0.9f, 0.7f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.2f, 0.1f, 0.9f, 0.0f, 1.0f,
 
-        -0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.2f, 0.6f, 0.9f, 0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f, 0.8f, 0.8f, 0.8f, 0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f, 0.4f, 0.7f, 0.5f, 1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f, 0.2f, 0.4f, 0.6f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.3f, 0.3f, 0.6f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 0.9f, 0.9f, 0.1f, 0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 0.1f, 0.1f, 0.4f, 0.0f, 1.0f
     };
     float vertecies2[] = {
         0.0f, -0.5f, 0.0f,  // left
@@ -225,10 +236,15 @@ void process_input(GLFWwindow* window) {
             transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 0.0f));
             transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
         }
+        
+        
         pos += 0.00030;
         process_input(window);
         glClearColor(0.9f, 0.33f, 0.25f, 0.9f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
@@ -244,9 +260,7 @@ void process_input(GLFWwindow* window) {
         
         transform = glm::mat4(1.0f);
         transform = glm::translate(transform, glm::vec3(-0.0f, 0.0f, 0.0f));
-        float scaleAmount = static_cast<float>(sin(glfwGetTime()));
-        transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0, 1.0f));
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 1.0, 1.0f));
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -254,6 +268,11 @@ void process_input(GLFWwindow* window) {
 
         // now with the uniform matrix being replaced with new transformations, draw it again.
         glDrawArrays(GL_TRIANGLES, 0, 36);
+        ImGui::Begin("Dev_ninis");
+        ImGui::Text("Anis");
+        ImGui::End();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glEnable(GL_DEPTH_TEST);
 
         if (a == "1") { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
