@@ -6,6 +6,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "Camera.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -18,14 +19,28 @@
 void framebuffer_size_callback(GLFWwindow*, int width, int height) {
     glViewport(0, 0, 2560, 1440);
 }
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+float deltaTime = 0.0f;	// time between current frame and last frame
+float lastFrame = 0.0f;
 void process_input(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
+    float cameraSpeed = static_cast<float>(9.5 * deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }int main() {
     std::string a;
     std::cout << " polygon mode 1: ou normal mode 2:" << std::endl;
-    std::cin >> a;
     int resX = 1920, resY = 1080;
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4.6);
@@ -110,6 +125,18 @@ void process_input(GLFWwindow* window) {
         0.9f, -0.5f, 0.0f,  // right
         0.45f, 0.5f, 0.0f,  // top 
         0.10, 0.5, 0.4
+    };
+    glm::vec3 cubePosition[] = {
+        glm::vec3(0.0f,  0.0f,  0.0f),
+        glm::vec3(2.0f,  5.0f, -15.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -12.3f),
+        glm::vec3(2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f,  3.0f, -7.5f),
+        glm::vec3(1.3f, -2.0f, -2.5f),
+        glm::vec3(1.5f,  2.0f, -2.5f),
+        glm::vec3(1.5f,  0.2f, -1.5f),
+        glm::vec3(-1.3f,  1.0f, -1.5f)
     };
     unsigned int indices[] = {
         0, 1, 2,
@@ -222,8 +249,17 @@ void process_input(GLFWwindow* window) {
     int modelLoc = glGetUniformLocation(compile.get_shader(), "model");
     int projectionLoc = glGetUniformLocation(compile.get_shader(), "projection");
     int viewLoc = glGetUniformLocation(compile.get_shader(), "view");
+    float radius = 10.0f;
+    float camX = sin(glfwGetTime()) * radius;
+    float camZ = cos(glfwGetTime()) * radius;
+    float camY = tan(glfwGetTime()) * radius;
+    float currentFrame;
+    // camera object
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
@@ -237,7 +273,7 @@ void process_input(GLFWwindow* window) {
             transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
         }
         
-        
+        std::cout << glfwGetTime() << std::endl;
         pos += 0.00030;
         process_input(window);
         glClearColor(0.9f, 0.93f, 0.25f, 0.1f);
@@ -253,30 +289,37 @@ void process_input(GLFWwindow* window) {
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO[0]);
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
-        
-        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(1.0f, 0.0f, -3.0f));
+        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.1, 0.0), glm::vec3(0.0, 1.0, 0.0));
         projection = glm::perspective(glm::radians(45.0f), (float)resFx / (float)resFy, 0.1f, 100.0f);
         
-        transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, glm::vec3(-0.0f, 0.0f, 0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 1.0, 1.0f));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform)); // this time take the matrix value array's first element as its memory pointer value
-
+       
+        for (int i(0); i < 10; i++) {
+            glm::mat4 model = glm::mat4(1.0f);
+            glm::mat4 view = glm::mat4(1.0f);
+            radius = 10.0f;
+            float camX = sin(glfwGetTime()) * radius;
+            float camZ = cos(glfwGetTime()) * radius;
+            float camY = sin(glfwGetTime()) * radius;
+            view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+            model = glm::translate(model, cubePosition[i]);
+            float angle = 20.0f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+            glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+            glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+        
         // now with the uniform matrix being replaced with new transformations, draw it again.
-        glDrawArrays(GL_TRIANGLES, 0, 36);
         ImGui::Begin("Dev_ninis");
-        ImGui::Button("R"); ImGui::Button("G"); ImGui::Button("B");
+        ImGui::Button("ANIS LE PROG"); ImGui::Button("G"); ImGui::Button("B");
         ImGui::Text("Anis");
         ImGui::End();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glEnable(GL_DEPTH_TEST);
 
-        if (a == "1") { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
         framebuffer_size_callback(window, resX2, resY2);
         glfwSwapBuffers(window);
         glfwPollEvents();
