@@ -63,7 +63,7 @@ void process_input(GLFWwindow* window) {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
-         return-1;
+        return-1;
     }
     glViewport(0, 0, resX2, resY2);
     // imgui
@@ -76,49 +76,49 @@ void process_input(GLFWwindow* window) {
     //
     float vertecies[] = {
 
-         // position         // color
-        // positions         // colors
-     -0.5f, -0.5f, -0.5f,   0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,  0.9f, 0.6f, 0.2f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  0.5f, 0.6f, 0.9f,1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  0.7f, 0.6f, 0.8f,1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.1f, 0.6f, 0.9f,0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.3f, 0.6f, 0.1f,0.0f, 0.0f,
+        // position         // color
+       // positions         // colors
+    -0.5f, -0.5f, -0.5f,   0.2f, 0.6f, 0.9f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  0.9f, 0.6f, 0.2f, 1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  0.5f, 0.6f, 0.9f,1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  0.7f, 0.6f, 0.8f,1.0f, 1.0f,
+       -0.5f,  0.5f, -0.5f,  0.1f, 0.6f, 0.9f,0.0f, 1.0f,
+       -0.5f, -0.5f, -0.5f,  0.3f, 0.6f, 0.1f,0.0f, 0.0f,
 
-        -0.5f, -0.5f,  0.5f,  0.2f, 0.1f, 0.9f,0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  0.9f, 0.6f, 0.9f,1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  0.2f, 0.2f, 0.9f,1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  0.3f, 0.6f, 0.1f,1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.2f, 0.3f, 0.9f,0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 0.0f,
+       -0.5f, -0.5f,  0.5f,  0.2f, 0.1f, 0.9f,0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  0.9f, 0.6f, 0.9f,1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  0.2f, 0.2f, 0.9f,1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  0.3f, 0.6f, 0.1f,1.0f, 1.0f,
+       -0.5f,  0.5f,  0.5f,  0.2f, 0.3f, 0.9f,0.0f, 1.0f,
+       -0.5f, -0.5f,  0.5f,  0.2f, 0.6f, 0.9f,0.0f, 0.0f,
 
-        -0.5f,  0.5f,  0.5f,  0.9f, 0.1f, 0.2f,1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.4f, 0.6f, 0.8f,1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.5f, 0.4f,0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.1f, 0.2f, 0.8f,0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.6f, 0.6f, 0.9f,0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.3f,1.0f, 0.0f,
+       -0.5f,  0.5f,  0.5f,  0.9f, 0.1f, 0.2f,1.0f, 0.0f,
+       -0.5f,  0.5f, -0.5f,  0.4f, 0.6f, 0.8f,1.0f, 1.0f,
+       -0.5f, -0.5f, -0.5f,  0.0f, 0.5f, 0.4f,0.0f, 1.0f,
+       -0.5f, -0.5f, -0.5f,  0.1f, 0.2f, 0.8f,0.0f, 1.0f,
+       -0.5f, -0.5f,  0.5f,  0.6f, 0.6f, 0.9f,0.0f, 0.0f,
+       -0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.3f,1.0f, 0.0f,
 
-         0.5f,  0.5f,  0.5f, 0.3f, 0.9f, 0.9f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f, 0.9f, 0.4f, 0.3f, 1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.1f, 0.6f, 0.9f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.7f, 0.1f, 0.5f, 0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 0.2f, 0.4f, 0.1f, 0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.7f, 0.9f, 0.0f, 1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f, 0.3f, 0.9f, 0.9f, 1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f, 0.9f, 0.4f, 0.3f, 1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 0.1f, 0.6f, 0.9f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 0.7f, 0.1f, 0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f, 0.2f, 0.4f, 0.1f, 0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f, 0.7f, 0.9f, 0.0f, 1.0f, 0.0f,
 
-        -0.5f, -0.5f, -0.5f, 0.7f, 0.6f, 0.8f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.5f, 0.4f, 0.1f, 1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 0.6f, 0.6f, 0.5f, 1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f, 0.9f, 0.3f, 0.2f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f, 0.1f, 0.9f, 0.7f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.2f, 0.1f, 0.9f, 0.0f, 1.0f,
+       -0.5f, -0.5f, -0.5f, 0.7f, 0.6f, 0.8f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 0.5f, 0.4f, 0.1f, 1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f, 0.6f, 0.6f, 0.5f, 1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f, 0.9f, 0.3f, 0.2f, 1.0f, 0.0f,
+       -0.5f, -0.5f,  0.5f, 0.1f, 0.9f, 0.7f, 0.0f, 0.0f,
+       -0.5f, -0.5f, -0.5f, 0.2f, 0.1f, 0.9f, 0.0f, 1.0f,
 
-        -0.5f,  0.5f, -0.5f, 0.8f, 0.8f, 0.8f, 0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f, 0.4f, 0.7f, 0.5f, 1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f, 0.2f, 0.4f, 0.6f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.3f, 0.3f, 0.6f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 0.9f, 0.9f, 0.1f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.1f, 0.1f, 0.4f, 0.0f, 1.0f
+       -0.5f,  0.5f, -0.5f, 0.8f, 0.8f, 0.8f, 0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f, 0.4f, 0.7f, 0.5f, 1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f, 0.2f, 0.4f, 0.6f, 1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f, 0.3f, 0.3f, 0.6f, 1.0f, 0.0f,
+       -0.5f,  0.5f,  0.5f, 0.9f, 0.9f, 0.1f, 0.0f, 0.0f,
+       -0.5f,  0.5f, -0.5f, 0.1f, 0.1f, 0.4f, 0.0f, 1.0f
     };
     float vertecies2[] = {
         0.0f, -0.5f, 0.0f,  // left
@@ -203,7 +203,7 @@ void process_input(GLFWwindow* window) {
     // textures 
     GLuint texture1;
     GLuint texture2;
-        // tex 1
+    // tex 1
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -213,13 +213,13 @@ void process_input(GLFWwindow* window) {
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borederColor);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load("img/containerBois.jpg", &width, &height, &nrChanels, 0);    
+    unsigned char* data = stbi_load("img/containerBois.jpg", &width, &height, &nrChanels, 0);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(data);
-        //
-            // fin de la texture1
-    //tex 2
+    //
+        // fin de la texture1
+//tex 2
     glGenTextures(1, &texture2);
     glBindTexture(GL_TEXTURE_2D, texture2);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -239,9 +239,9 @@ void process_input(GLFWwindow* window) {
     compile.Use_second_program_shader();
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture1"), 0);
     glUniform1i(glGetUniformLocation(compile.get_shader(), "texture2"), 1);
-        //
+    //
     glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-    glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
+    glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
     unsigned int transformLoc = glGetUniformLocation(compile.get_shader(), "transform");
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
@@ -272,7 +272,7 @@ void process_input(GLFWwindow* window) {
             transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 0.0f));
             transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
         }
-        
+
         std::cout << glfwGetTime() << std::endl;
         pos += 0.00030;
         process_input(window);
@@ -291,8 +291,8 @@ void process_input(GLFWwindow* window) {
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
         view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.1, 0.0), glm::vec3(0.0, 1.0, 0.0));
         projection = glm::perspective(glm::radians(45.0f), (float)resFx / (float)resFy, 0.1f, 100.0f);
-        
-       
+
+
         for (int i(0); i < 10; i++) {
             glm::mat4 model = glm::mat4(1.0f);
             glm::mat4 view = glm::mat4(1.0f);
@@ -310,7 +310,7 @@ void process_input(GLFWwindow* window) {
             glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
-        
+
         // now with the uniform matrix being replaced with new transformations, draw it again.
         ImGui::Begin("Dev_ninis");
         ImGui::Button("ANIS LE PROG"); ImGui::Button("G"); ImGui::Button("B");

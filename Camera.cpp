@@ -6,7 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Camera::Camera(float currentFrame) : currentFrame2(currentFrame) {
- lastFrame = 0.0f; deltaTime = 0.0f; 
+ lastFrame = 0.0f; deltaTime = 1.0f; 
 }
 Camera::~Camera() {}
 
@@ -18,14 +18,23 @@ void Camera::processInputCamera(GLFWwindow* window, float currentframe, glm::vec
 	float CameraSpeed = 2.5f * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_W)) {
 		cameraPos += cameraFront * CameraSpeed;
+		camPos = cameraPos;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A)) {
 		cameraPos -= cameraFront * CameraSpeed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q)) {
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * CameraSpeed;
+		camPos = cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * CameraSpeed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D)) {
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * CameraSpeed;
+		camPos = cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * CameraSpeed;
 	}
 }
+// get value
+float Camera::getdeltaTime() { return deltaTime; }
+float Camera::getcurrentFrame2() { return currentFrame2; }
+float Camera::getlastFrame() { return lastFrame; }
+
+glm::vec3 Camera::getCamPos() { return camPos; }
+glm::vec3 Camera::getUpCam() { return UpCam; }
+glm::vec3 Camera::getFrontCam() { return FrontCam; }
