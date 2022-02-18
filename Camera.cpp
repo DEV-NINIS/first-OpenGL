@@ -6,28 +6,24 @@
 #include <glm/gtc/type_ptr.hpp>
 
 Camera::Camera(float currentFrame) : currentFrame2(currentFrame) {
- lastFrame = 0.0f; deltaTime = 1.0f; 
+	lastFrame = 0.0f; deltaTime = 1.0f; camPos = glm::vec3(0.0f, 0.0f, -3.0f); UpCam = glm::vec3(0.0f, 1.0f, 0.0f); FrontCam = glm::vec3(0.0f, 0.0f, 1.0f);
 }
 Camera::~Camera() {}
 
-void Camera::processInputCamera(GLFWwindow* window, float currentframe, glm::vec3 cameraFront, glm::vec3 cameraUp, glm::vec3 cameraPos) {
-	currentFrame2 = currentframe;
-	currentFrame2 = static_cast<float>(glfwGetTime());
-	deltaTime = currentFrame2 - lastFrame;
-	lastFrame = currentFrame2;
-	float CameraSpeed = 2.5f * deltaTime;
-	if (glfwGetKey(window, GLFW_KEY_W)) {
-		cameraPos += cameraFront * CameraSpeed;
-		camPos = cameraPos;
-	}
-	if (glfwGetKey(window, GLFW_KEY_A)) {
-		cameraPos -= cameraFront * CameraSpeed;
-	}
-	if (glfwGetKey(window, GLFW_KEY_Q)) {
-		camPos = cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * CameraSpeed;
+void Camera::processInputCamera(GLFWwindow* window, float deltatime2) 
+{
+	float CameraSpeed = 9.5f * deltatime2;
+	if (glfwGetKey(window, GLFW_KEY_E)) {
+		camPos += FrontCam * CameraSpeed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D)) {
-		camPos = cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * CameraSpeed;
+		camPos -= FrontCam * CameraSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_F)) {
+		camPos = camPos -= glm::normalize(glm::cross(FrontCam, UpCam)) * CameraSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S)) {
+		camPos = camPos += glm::normalize(glm::cross(FrontCam, UpCam)) * CameraSpeed;
 	}
 }
 // get value

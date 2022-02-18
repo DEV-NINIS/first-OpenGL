@@ -12,7 +12,7 @@ class Camera
 public:
 	Camera(float currentFrame);
 	~Camera();
-	void processInputCamera(GLFWwindow* window, float currentFrame, glm::vec3 cameraFront, glm::vec3 cameraUp, glm::vec3 cameraPos);
+	void processInputCamera(GLFWwindow* window, float deltatime2);
 	// getting value
 	glm::vec3 getCamPos();
 	glm::vec3 getUpCam();

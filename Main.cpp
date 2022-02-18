@@ -19,26 +19,13 @@
 void framebuffer_size_callback(GLFWwindow*, int width, int height) {
     glViewport(0, 0, 2560, 1440);
 }
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-float deltaTime = 0.0f;	// time between current frame and last frame
-float lastFrame = 0.0f;
 void process_input(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
     }
-    float cameraSpeed = static_cast<float>(9.5 * deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-}int main() {
+}
+int main() {
     std::string a;
     std::cout << " polygon mode 1: ou normal mode 2:" << std::endl;
     int resX = 1920, resY = 1080;
@@ -253,17 +240,17 @@ void process_input(GLFWwindow* window) {
     float camX = sin(glfwGetTime()) * radius;
     float camZ = cos(glfwGetTime()) * radius;
     float camY = tan(glfwGetTime()) * radius;
-    float currentFrame;
+    float currentFrame = 0, deltaTime = 0, lastFrame = 0;
+    Camera camera(currentFrame);
     // camera object
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
+        glm::mat4 projection = glm::mat4(1.0f);
+        glm::mat4 transform = glm::mat4(1.0f);
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 projection = glm::mat4(1.0f);
-        glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+         // make sure to initialize matrix to identity matrix first
         if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
             transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 1.0f));
             transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.5f, 0.0f, 0.7f));
@@ -272,7 +259,7 @@ void process_input(GLFWwindow* window) {
             transform = glm::translate(transform, glm::vec3(0.0f, -0.0f, 0.0f));
             transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
         }
-
+        camera.processInputCamera(window, deltaTime);
         std::cout << glfwGetTime() << std::endl;
         pos += 0.00030;
         process_input(window);
@@ -289,9 +276,7 @@ void process_input(GLFWwindow* window) {
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         glBindVertexArray(VAO[0]);
         glUniform1f(glGetUniformLocation(compile.get_shader(), "position"), pos);
-        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.1, 0.0), glm::vec3(0.0, 1.0, 0.0));
         projection = glm::perspective(glm::radians(45.0f), (float)resFx / (float)resFy, 0.1f, 100.0f);
-
 
         for (int i(0); i < 10; i++) {
             glm::mat4 model = glm::mat4(1.0f);
@@ -300,10 +285,13 @@ void process_input(GLFWwindow* window) {
             float camX = sin(glfwGetTime()) * radius;
             float camZ = cos(glfwGetTime()) * radius;
             float camY = sin(glfwGetTime()) * radius;
-            view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
             model = glm::translate(model, cubePosition[i]);
             float angle = 20.0f * i;
+            if (camera.getCamPos() == glm::vec3(1.0f)) {
+                std::cout << " failure " << std::endl;
+            }
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            view = glm::lookAt(camera.getCamPos(), camera.getCamPos() - camera.getFrontCam(), camera.getUpCam());
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
             glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
