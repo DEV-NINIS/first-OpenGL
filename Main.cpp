@@ -240,11 +240,12 @@ int main() {
     float camX = sin(glfwGetTime()) * radius;
     float camZ = cos(glfwGetTime()) * radius;
     float camY = tan(glfwGetTime()) * radius;
-    float currentFrame = 0, deltaTime = 0, lastFrame = 0;
+    float currentFrame = 0, deltaTime = 0, lastFrame = 0; float frame = 0;
     Camera camera(currentFrame);
     // camera object
     while (!glfwWindowShouldClose(window)) // boucle de rendu
     {
+        frame++;
         glm::mat4 projection = glm::mat4(1.0f);
         glm::mat4 transform = glm::mat4(1.0f);
         float currentFrame = static_cast<float>(glfwGetTime());
@@ -260,7 +261,6 @@ int main() {
             transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 1.0f));
         }
         camera.processInputCamera(window, deltaTime);
-        std::cout << glfwGetTime() << std::endl;
         pos += 0.00030;
         process_input(window);
         glClearColor(0.9f, 0.93f, 0.25f, 0.1f);
@@ -307,7 +307,7 @@ int main() {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glEnable(GL_DEPTH_TEST);
-
+        
         framebuffer_size_callback(window, resX2, resY2);
         glfwSwapBuffers(window);
         glfwPollEvents();
