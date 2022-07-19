@@ -17,7 +17,8 @@ public:
 	glm::vec3 getCamPos();
 	glm::vec3 getUpCam();
 	glm::vec3 getFrontCam();
-
+	glm::vec3 setCamFront(glm::vec3 front);
+	glm::vec3 setUpCam(glm::vec3 Up);
 	float getdeltaTime();
 	float getlastFrame();
 	float getcurrentFrame2();

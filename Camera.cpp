@@ -12,7 +12,7 @@ Camera::~Camera() {}
 
 void Camera::processInputCamera(GLFWwindow* window, float deltatime2) 
 {
-	float CameraSpeed = 9.5f * deltatime2;
+	float CameraSpeed = 19.5f * deltatime2;
 	if (glfwGetKey(window, GLFW_KEY_E)) {
 		camPos += FrontCam * CameraSpeed;
 	}
@@ -26,6 +26,15 @@ void Camera::processInputCamera(GLFWwindow* window, float deltatime2)
 		camPos = camPos += glm::normalize(glm::cross(FrontCam, UpCam)) * CameraSpeed;
 	}
 }
+glm::vec3 Camera::setCamFront(glm::vec3 front) {
+	FrontCam = glm::normalize(front);
+	return FrontCam;
+}
+glm::vec3 Camera::setUpCam(glm::vec3 Up) {
+	UpCam = glm::normalize(Up);
+	return UpCam;
+}
+
 // get value
 float Camera::getdeltaTime() { return deltaTime; }
 float Camera::getcurrentFrame2() { return currentFrame2; }

@@ -47,6 +47,8 @@ fragment_shader = "#version 460 core\n"
 "out vec4 FragColor;\n"
 "in vec3 ourColor;\n"
 "in vec2 TexCoord;\n"
+"uniform vec3 lightColor;\n"
+
 
 "uniform sampler2D texture1;\n"
 "uniform sampler2D texture2;\n"
